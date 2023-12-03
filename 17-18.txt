@@ -1,131 +1,113 @@
 ﻿Q)Write a Java Program to implement Abstract Factory Pattern for Shape
 interface.
-// Shape interface
-interface Shape {
-        void draw();
+ interface Shape {
+   void draw();
 }
 
 
-// Concrete implementation of Circle
-class Circle implements Shape {
-        @Override
-        public void draw() {
-            System.out.println("Drawing Circle");
-        }
+ class RoundedRectangle implements Shape {
+   @Override
+   public void draw() {
+          System.out.println("Inside RoundedRectangle::draw() method.");
+   }
 }
 
 
-// Concrete implementation of Square
-class Square implements Shape {
-        @Override
-        public void draw() {
-            System.out.println("Drawing Square");
-        }
+ class RoundedSquare implements Shape {
+   @Override
+   public void draw() {
+          System.out.println("Inside RoundedSquare::draw() method.");
+   }
 }
 
 
-// Concrete implementation of Rectangle
-class Rectangle implements Shape {
-        @Override
-        public void draw() {
-            System.out.println("Drawing Rectangle");
-        }
+ class Rectangle implements Shape {
+   @Override
+   public void draw() {
+          System.out.println("Inside Rectangle::draw() method.");
+   }
 }
 
 
-// Concrete implementation of Triangle
-class Triangle implements Shape {
-        @Override
-        public void draw() {
-            System.out.println("Drawing Triangle");
-        }
+ class Square implements Shape {
+   @Override
+   public void draw() {
+          System.out.println("Inside Rectangle::draw() method.");
+   }
 }
 
 
-// Abstract Factory interface
-interface ShapeFactory {
-        Shape createCircle();
-        Shape createSquare();
-        Shape createRectangle();
-        Shape createTriangle();
+ abstract class AbstractFactory {
+   abstract Shape getShape(String shapeType) ;
 }
 
 
-// Concrete Factory 1
-class ConcreteFactory1 implements ShapeFactory {
-        @Override
-        public Shape createCircle() {
-            return new Circle();
-        }
-
-
-        @Override
-        public Shape createSquare() {
-            return new Square();
-        }
-
-
-        @Override
-        public Shape createRectangle() {
-            return new Rectangle();
-        }
-
-
-        @Override
-        public Shape createTriangle() {
-            return new Triangle();
-        }
+ class ShapeFactory extends AbstractFactory {
+   @Override
+   public Shape getShape(String shapeType){    
+          if(shapeType.equalsIgnoreCase("RECTANGLE")){
+             return new Rectangle();             
+          }else if(shapeType.equalsIgnoreCase("SQUARE")){
+             return new Square();
+          }  
+          return null;
+   }
 }
 
 
-// Concrete Factory 2
-class ConcreteFactory2 implements ShapeFactory {
-        @Override
-        public Shape createCircle() {
-            return new Circle();
-        }
-
-
-        @Override
-        public Shape createSquare() {
-            return new Square();
-        }
-
-
-        @Override
-        public Shape createRectangle() {
-            return new Rectangle();
-        }
-
-
-        @Override
-        public Shape createTriangle() {
-            return new Triangle();
-        }
+ class RoundedShapeFactory extends AbstractFactory {
+   @Override
+   public Shape getShape(String shapeType){    
+          if(shapeType.equalsIgnoreCase("RECTANGLE")){
+             return new RoundedRectangle();             
+          }else if(shapeType.equalsIgnoreCase("SQUARE")){
+             return new RoundedSquare();
+          }  
+          return null;
+   }
 }
 
 
-// Client class using the Abstract Factory
-public class Client {
-        public static void main(String[] args) {
-            // Create a factory (you can switch between ConcreteFactory1 and ConcreteFactory2)
-            ShapeFactory factory = new ConcreteFactory1();
-
-
-            // Use the factory to create shapes
-            Shape circle = factory.createCircle();
-            Shape square = factory.createSquare();
-            Shape rectangle = factory.createRectangle();
-            Shape triangle = factory.createTriangle();
-
-
-            // Draw the shapes
-            circle.draw();
-            square.draw();
-            rectangle.draw();
-            triangle.draw();
-        }
+ class FactoryProducer {
+   public static AbstractFactory getFactory(boolean rounded){   
+          if(rounded){
+             return new RoundedShapeFactory();             
+          }else{
+             return new ShapeFactory();
+          }
+   }
 }
+
+
+public class Main {
+   public static void main(String[] args) {
+          //get shape factory
+          AbstractFactory shapeFactory = FactoryProducer.getFactory(false);
+          //get an object of Shape Rectangle
+          Shape shape1 = shapeFactory.getShape("RECTANGLE");
+          //call draw method of Shape Rectangle
+          shape1.draw();
+          //get an object of Shape Square
+          Shape shape2 = shapeFactory.getShape("SQUARE");
+          //call draw method of Shape Square
+          shape2.draw();
+          //get shape factory
+          AbstractFactory shapeFactory1 = FactoryProducer.getFactory(true);
+          //get an object of Shape Rectangle
+          Shape shape3 = shapeFactory1.getShape("RECTANGLE");
+          //call draw method of Shape Rectangle
+          shape3.draw();
+          //get an object of Shape Square
+          Shape shape4 = shapeFactory1.getShape("SQUARE");
+          //call draw method of Shape Square
+          shape4.draw();
+          
+   }
+}
+
+
+
+
 
 
 
@@ -420,6 +402,20 @@ plt.ylabel('y')
 plt.legend()
 plt.title('Polynomial Linear Regression')
 plt.show()
+
+
+
+
+X,y
+1,2.5
+2,3.5
+3,5.0
+4,7.0
+5,8.5
+
+
+
+
 
 
 
